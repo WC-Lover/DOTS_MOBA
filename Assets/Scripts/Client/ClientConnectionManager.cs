@@ -1,4 +1,7 @@
 ﻿using TMPro;
+using Unity.Entities;
+using Unity.NetCode;
+using Unity.Networking.Transport;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -80,17 +83,53 @@ namespace TMG.NFE_Tutorial
 
         private static void DestroyLocalSimulationWorld()
         {
-            
+            foreach (var world in World.All)
+            {
+                if (world.Flags == WorldFlags.Game)
+                {
+                    world.Dispose();
+                    break;
+                }
+            } 
         }
 
         private void StartServer()
         {
-            
+            var serverWorld = ClientServerBootstrap.CreateServerWorld("Turbo Server World");
+
+            var serverEndpoint = NetworkEndpoint.AnyIpv4.WithPort(Port);
+
+            {
+                using var networkDriverQuery = serverWorld.EntityManager.CreateEntityQuery(ComponentType.ReadWrite<NetworkStreamDriver>());
+                networkDriverQuery.GetSingletonRW<NetworkStreamDriver>().ValueRW.Listen(serverEndpoint);
+            }
         }
 
         private void StartClient()
         {
-            
+            var clientWorld = ClientServerBootstrap.CreateClientWorld("Turbo Client World");
+
+            var connectionEndpoint = NetworkEndpoint.Parse(Address, Port);
+
+            {
+                using var networkDriverQuery = clientWorld.EntityManager.CreateEntityQuery(ComponentType.ReadWrite<NetworkStreamDriver>());
+                networkDriverQuery.GetSingletonRW<NetworkStreamDriver>().ValueRW.Connect(clientWorld.EntityManager, connectionEndpoint);
+            }
+
+            var team = _teamDropdown.value switch
+            {
+                0 => TeamType.AutoAssign,
+                1 => TeamType.Blue,
+                2 => TeamType.Red,
+                _ => TeamType.None,
+            };
+
+            var teamRequestEntity = clientWorld.EntityManager.CreateEntity();
+
+            clientWorld.EntityManager.AddComponentData(teamRequestEntity, new ClientTeamRequest
+            {
+                teamType = team,
+            });
         }
     }
 }

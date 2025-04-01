@@ -1,2 +1,1 @@
-# Miners
-Multiplayer top-down game.  
+# DOTS_MOBA
