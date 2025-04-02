@@ -141,6 +141,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower
       objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -251,6 +256,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tower_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
@@ -363,6 +373,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower_1
       objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -473,6 +488,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
@@ -585,6 +605,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower_3
       objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -687,6 +712,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 882232979}
+  - component: {fileID: 882232980}
   m_Layer: 0
   m_Name: CameraEntity
   m_TagString: Untagged
@@ -709,6 +735,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &882232980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882232977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e72bc5c25e395c44bbd21b606d7ef09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &922635641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -726,6 +764,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
@@ -1013,6 +1056,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower
       objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1279,6 +1327,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower
       objectReference: {fileID: 0}
+    - target: {fileID: 3635908178770281352, guid: 38f4e9377d234a64488bff6c7061bc95,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5385229956262694721, guid: 38f4e9377d234a64488bff6c7061bc95,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1380,6 +1433,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7973163951160510970, guid: c22c40ef4537da44597359c8d8e582e2,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 187936380527875801, guid: c22c40ef4537da44597359c8d8e582e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1501,6 +1559,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7973163951160510970, guid: c22c40ef4537da44597359c8d8e582e2,
+        type: 3}
+      propertyPath: MobaTeam
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 187936380527875801, guid: c22c40ef4537da44597359c8d8e582e2,
         type: 3}
       propertyPath: m_LocalPosition.x

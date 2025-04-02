@@ -60,7 +60,7 @@ public partial struct ServerProcessGameEntryRequestSystem : ISystem
             });
             ecb.SetComponent(champ, new MobaTeam
             {
-                TeamType = requestedTeamType,
+                Value = requestedTeamType,
             });
             ecb.AppendToBuffer(requestSource.SourceConnection, new LinkedEntityGroup
             {

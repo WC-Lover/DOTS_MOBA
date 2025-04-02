@@ -43,7 +43,7 @@ namespace TMG.NFE_Tutorial
             _transposer = _cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
         }
 
-        /*private void Start()
+        private void Start()
         {
             if (World.DefaultGameObjectInjectionWorld == null) return;
             _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -52,8 +52,10 @@ namespace TMG.NFE_Tutorial
 
             // Move the camera to the base corresponding to the team the player is on.
             // Spectators' cameras will start in the center of the map
+
             if (_teamControllerQuery.TryGetSingleton<ClientTeamRequest>(out var requestedTeam))
             {
+                Debug.Log("Did it");
                 var team = requestedTeam.Value;
                 var cameraPosition = team switch
                 {
@@ -68,7 +70,7 @@ namespace TMG.NFE_Tutorial
                     _cameraSet = true;
                 }
             }
-        }*/
+        }
 
         private void OnValidate()
         {
@@ -77,7 +79,7 @@ namespace TMG.NFE_Tutorial
 
         private void Update()
         {
-            // SetCameraForAutoAssignTeam();
+            SetCameraForAutoAssignTeam();
             MoveCamera();
             ZoomCamera();
         }
@@ -120,12 +122,14 @@ namespace TMG.NFE_Tutorial
             }
         }
 
-        /*private void SetCameraForAutoAssignTeam()
+        private void SetCameraForAutoAssignTeam()
         {
             if (!_cameraSet)
             {
+                Debug.Log("Camera is not set");
                 if (_localChampQuery.TryGetSingletonEntity<OwnerChampTag>(out var localChamp))
                 {
+                    Debug.Log("Has singleton entity");
                     var team = _entityManager.GetComponentData<MobaTeam>(localChamp).Value;
                     var cameraPosition = team switch
                     {
@@ -137,7 +141,7 @@ namespace TMG.NFE_Tutorial
                     _cameraSet = true;
                 }
             }
-        }*/
+        }
 
         private void OnDrawGizmos()
         {

@@ -128,7 +128,7 @@ namespace TMG.NFE_Tutorial
 
             clientWorld.EntityManager.AddComponentData(teamRequestEntity, new ClientTeamRequest
             {
-                teamType = team,
+                Value = team,
             });
         }
     }

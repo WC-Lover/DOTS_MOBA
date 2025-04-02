@@ -17,7 +17,7 @@ public partial struct ClientRequestGameEntrySystem : ISystem
 
     public void OnUpdate(ref SystemState state)
     {
-        var requestTeam = SystemAPI.GetSingleton<ClientTeamRequest>().teamType;
+        var requestTeam = SystemAPI.GetSingleton<ClientTeamRequest>().Value;
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
 

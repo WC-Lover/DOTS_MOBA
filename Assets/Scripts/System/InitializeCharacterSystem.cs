@@ -20,7 +20,7 @@ public partial struct InitializeCharacterSystem : ISystem
             physicsMass.ValueRW.InverseInertia[1] = 0;
             physicsMass.ValueRW.InverseInertia[2] = 0;
 
-            var teamColor = mobaTeam.TeamType switch
+            var teamColor = mobaTeam.Value switch
             {
                 TeamType.Blue => new float4(0, 0, 1, 1),
                 TeamType.Red => new float4(1, 0, 0, 1),

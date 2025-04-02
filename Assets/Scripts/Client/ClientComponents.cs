@@ -2,6 +2,6 @@
 
 public struct ClientTeamRequest : IComponentData
 {
-    public TeamType teamType;
+    public TeamType Value;
 }
 
