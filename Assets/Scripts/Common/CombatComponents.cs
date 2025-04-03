@@ -27,6 +27,7 @@ public struct DamageThisTick : ICommandData
 public struct AbilityPrefabs : IComponentData
 {
     public Entity AoeAbility;
+    public Entity SkillShotAbility;
 }
 
 public struct DestroyOnTimer : IComponentData
@@ -50,4 +51,28 @@ public struct DamageOnTrigger : IComponentData
 public struct AlreadyDamagedEntity : IBufferElementData
 {
     public Entity Value;
+}
+
+public struct AbilityCooldownTicks : IComponentData
+{
+    public uint AoeAbility;
+    public uint SkillShotAbility;
+}
+
+[GhostComponent(PrefabType = GhostPrefabType.AllPredicted)]
+public struct AbilityCooldownTargetTicks : ICommandData
+{
+    public NetworkTick Tick { get; set; }
+    public NetworkTick AoeAbility;
+    public NetworkTick SkillShotAbility;
+}
+
+public struct AimSkillShotTag : IComponentData
+{
+
+}
+
+public struct AbilityMoveSpeed : IComponentData
+{
+    public float Value;
 }

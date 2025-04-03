@@ -25,9 +25,19 @@ public partial class AbilityInputSystem : SystemBase
     {
         var newAbilityInput = new AbilityInput();
 
-        if (_inputActions.GameplayMap.AoeAblility.WasPerformedThisFrame())
+        if (_inputActions.GameplayMap.AoeAblility.WasPressedThisFrame())
         {
             newAbilityInput.AoeAbility.Set();
+        }
+
+        if (_inputActions.GameplayMap.SkillShotAbility.WasPressedThisFrame())
+        {
+            newAbilityInput.SkillShotAbility.Set();
+        }
+
+        if (_inputActions.GameplayMap.ConfirmSkillShotAbility.WasPressedThisFrame())
+        {
+            newAbilityInput.ConfirmSkillShotAbility.Set();
         }
 
         foreach (var abilityInput in SystemAPI.Query<RefRW<AbilityInput>>())

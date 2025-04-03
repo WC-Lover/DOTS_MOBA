@@ -126,10 +126,8 @@ namespace TMG.NFE_Tutorial
         {
             if (!_cameraSet)
             {
-                Debug.Log("Camera is not set");
                 if (_localChampQuery.TryGetSingletonEntity<OwnerChampTag>(out var localChamp))
                 {
-                    Debug.Log("Has singleton entity");
                     var team = _entityManager.GetComponentData<MobaTeam>(localChamp).Value;
                     var cameraPosition = team switch
                     {
