@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9c471fa677f3f43a769c96ada09be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 3.5
+  MoveSpeed: 15
 --- !u!114 &6932481588114982326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHitPoints: 1000
+  HealthBarOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &-8512367813959572051
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class MobaPrefabsAuthoring : MonoBehaviour
 {
+    [Header("Entities")]
     public GameObject Champion;
+    [Header("GameObjects")]
+    public GameObject HealthBarPrefab;
 
     public class Baker : Baker<MobaPrefabsAuthoring>
     {
@@ -14,6 +17,10 @@ public class MobaPrefabsAuthoring : MonoBehaviour
             AddComponent(entity, new MobaPrefabs
             {
                 Champion = GetEntity(authoring.Champion, TransformUsageFlags.Dynamic),
+            });
+            AddComponentObject(entity, new UIPrefabs
+            {
+                HealthBar = authoring.HealthBarPrefab,
             });
         }
     }
