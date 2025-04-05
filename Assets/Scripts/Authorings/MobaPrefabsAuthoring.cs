@@ -8,6 +8,7 @@ public class MobaPrefabsAuthoring : MonoBehaviour
     public GameObject Champion;
     [Header("GameObjects")]
     public GameObject HealthBarPrefab;
+    public GameObject SkillShotAimPrefab;
 
     public class Baker : Baker<MobaPrefabsAuthoring>
     {
@@ -21,6 +22,7 @@ public class MobaPrefabsAuthoring : MonoBehaviour
             AddComponentObject(entity, new UIPrefabs
             {
                 HealthBar = authoring.HealthBarPrefab,
+                SkillShot = authoring.SkillShotAimPrefab,
             });
         }
     }

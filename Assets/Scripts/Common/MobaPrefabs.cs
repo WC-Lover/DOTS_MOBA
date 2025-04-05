@@ -9,4 +9,5 @@ public struct MobaPrefabs : IComponentData
 public class UIPrefabs : IComponentData
 {
     public GameObject HealthBar;
+    public GameObject SkillShot;
 }

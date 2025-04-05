@@ -1,40 +1,37 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace TMG.NFE_Tutorial
+public class AbilityCooldownUIController : MonoBehaviour
 {
-    public class AbilityCooldownUIController : MonoBehaviour
+    public static AbilityCooldownUIController Instance;
+
+    [SerializeField] private Image _aoeAbilityMask;
+    [SerializeField] private Image _skillShotAbilityMask;
+
+    private void Awake()
     {
-        public static AbilityCooldownUIController Instance;
-        
-        [SerializeField] private Image _aoeAbilityMask;
-        [SerializeField] private Image _skillShotAbilityMask;
-
-        private void Awake()
+        if (Instance != null)
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
+            Destroy(gameObject);
+            return;
         }
 
-        private void Start()
-        {
-            _aoeAbilityMask.fillAmount = 0f;
-            _skillShotAbilityMask.fillAmount = 0f;
-        }
+        Instance = this;
+    }
 
-        public void UpdateAoeMask(float fillAmount)
-        {
-            _aoeAbilityMask.fillAmount = fillAmount;
-        }
+    private void Start()
+    {
+        _aoeAbilityMask.fillAmount = 0f;
+        _skillShotAbilityMask.fillAmount = 0f;
+    }
 
-        public void UpdateSkillShotMask(float fillAmount)
-        {
-            _skillShotAbilityMask.fillAmount = fillAmount;
-        }
+    public void UpdateAoeMask(float fillAmount)
+    {
+        _aoeAbilityMask.fillAmount = fillAmount;
+    }
+
+    public void UpdateSkillShotMask(float fillAmount)
+    {
+        _skillShotAbilityMask.fillAmount = fillAmount;
     }
 }

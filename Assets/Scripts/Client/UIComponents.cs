@@ -11,3 +11,8 @@ public struct HealthBarOffset : IComponentData
 {
     public float3 Value;
 }
+
+public class SkillShotUIReference : ICleanupComponentData
+{
+    public GameObject Value;
+}

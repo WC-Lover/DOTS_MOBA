@@ -48,6 +48,14 @@ public partial struct HealthBarSystem : ISystem
             healthBarUI.Value.transform.position = healthBarPosition;
             SetHealthBar(healthBarUI.Value, currentHitPoints.Value, maxHitPoints.Value);
         }
+
+        // Cleanup health bar once associated entity is destroyed
+        foreach (var (healthBarUI, entity)
+            in SystemAPI.Query<HealthBarUIReference>().WithNone<LocalTransform>().WithEntityAccess())
+        {
+            Object.Destroy(healthBarUI.Value);
+            ecb.RemoveComponent<HealthBarUIReference>(entity);
+        }
     }
 
     private void SetHealthBar(GameObject healthBarCanvasObject, int curHitPoints, int maxHitPoints)
