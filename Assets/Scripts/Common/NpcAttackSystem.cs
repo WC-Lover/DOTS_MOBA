@@ -12,6 +12,7 @@ public partial struct NpcAttackSystem : ISystem
     {
         state.RequireForUpdate<NetworkTime>();
         state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
+        state.RequireForUpdate<GamePlayingTag>();
     }
 
     public void OnUpdate(ref SystemState state)

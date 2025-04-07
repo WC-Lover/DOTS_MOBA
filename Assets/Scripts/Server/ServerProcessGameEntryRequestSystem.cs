@@ -13,6 +13,8 @@ public partial struct ServerProcessGameEntryRequestSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<MobaPrefabs>();
+        state.RequireForUpdate<GameStartProperties>();
+        state.RequireForUpdate<NetworkTime>();
         var builder = new EntityQueryBuilder(Allocator.Temp).WithAll<MobaTeamRequest, ReceiveRpcCommandRequest>();
         state.RequireForUpdate(state.GetEntityQuery(builder));
     }
@@ -21,6 +23,11 @@ public partial struct ServerProcessGameEntryRequestSystem : ISystem
     {
         var ecb = new EntityCommandBuffer(Allocator.Temp);
         var championPrefab = SystemAPI.GetSingleton<MobaPrefabs>().Champion;
+
+        var gamePropertyEntity = SystemAPI.GetSingletonEntity<GameStartProperties>();
+        var gameStartProperties = SystemAPI.GetComponent<GameStartProperties>(gamePropertyEntity);
+        var teamPlayerCounter = SystemAPI.GetComponent<TeamPlayerCounter>(gamePropertyEntity);
+        var spawnOffsets = SystemAPI.GetBuffer<SpawnOffset>(gamePropertyEntity);
 
         foreach (var (teamRequest, requestSource, entity)
             in SystemAPI.Query<MobaTeamRequest, ReceiveRpcCommandRequest>().WithEntityAccess())
@@ -32,7 +39,7 @@ public partial struct ServerProcessGameEntryRequestSystem : ISystem
 
             if (requestedTeamType == TeamType.AutoAssign)
             {
-                requestedTeamType = TeamType.Blue;
+                requestedTeamType = teamPlayerCounter.BlueTeamPlayers < teamPlayerCounter.RedTeamPlayers ? TeamType.Blue : TeamType.Red;
             }
 
             var spawnPosition = new float3(0, 1, 0);
@@ -40,10 +47,16 @@ public partial struct ServerProcessGameEntryRequestSystem : ISystem
             switch (requestedTeamType)
             {
                 case TeamType.Blue:
+                    if (teamPlayerCounter.BlueTeamPlayers >= gameStartProperties.MaxPlayersPerTeam) continue;
                     spawnPosition = new float3(-50f, 1f, -50f);
+                    spawnPosition += spawnOffsets[teamPlayerCounter.BlueTeamPlayers].Value;
+                    teamPlayerCounter.BlueTeamPlayers++;
                     break;
                 case TeamType.Red:
+                    if (teamPlayerCounter.RedTeamPlayers >= gameStartProperties.MaxPlayersPerTeam) continue;
                     spawnPosition = new float3(50f, 1f, 50f);
+                    spawnPosition += spawnOffsets[teamPlayerCounter.RedTeamPlayers].Value;
+                    teamPlayerCounter.RedTeamPlayers++;
                     break;
                 default:
                     continue;
@@ -51,23 +64,45 @@ public partial struct ServerProcessGameEntryRequestSystem : ISystem
 
             var champ = ecb.Instantiate(championPrefab);
             var newTransform = LocalTransform.FromPosition(spawnPosition);
-            ecb.SetComponent(champ, newTransform);
 
             var clientId = SystemAPI.GetComponent<NetworkId>(requestSource.SourceConnection).Value;
-            ecb.SetComponent(champ, new GhostOwner
+            ecb.SetComponent(champ, newTransform);
+            ecb.SetComponent(champ, new GhostOwner { NetworkId = clientId, });
+            ecb.SetComponent(champ, new MobaTeam { Value = requestedTeamType, });
+            ecb.AppendToBuffer(requestSource.SourceConnection, new LinkedEntityGroup { Value = champ, });
+
+            ecb.SetComponent(champ, new NetworkEntityReference { Value = requestSource.SourceConnection });
+
+            ecb.AddComponent(requestSource.SourceConnection, new PlayerSpawnInfo
             {
-                NetworkId = clientId,
+                MobaTeam = requestedTeamType,
+                SpawnPosition = spawnPosition,
             });
-            ecb.SetComponent(champ, new MobaTeam
+
+            var playersRemainingToStart = gameStartProperties.MinPlayersToStartGame - teamPlayerCounter.TotalPlayers;
+
+            var gameStartRpc = ecb.CreateEntity();
+            if (playersRemainingToStart <= 0 && !SystemAPI.HasSingleton<GamePlayingTag>())
             {
-                Value = requestedTeamType,
-            });
-            ecb.AppendToBuffer(requestSource.SourceConnection, new LinkedEntityGroup
+                var simulationTickRate = NetCodeConfig.Global.ClientServerTickRate.SimulationTickRate;
+                var ticksUntilStart = (uint)(simulationTickRate * gameStartProperties.CountdownTime);
+                var gameStartTick = SystemAPI.GetSingleton<NetworkTime>().ServerTick;
+                gameStartTick.Add(ticksUntilStart);
+
+                ecb.AddComponent(gameStartRpc, new GameStartTickRpc { Value = gameStartTick });
+
+                var gameStartEntity = ecb.CreateEntity();
+                ecb.AddComponent(gameStartEntity, new GameStartTick { Value = gameStartTick });
+            }
+            else
             {
-                Value = champ,
-            });
+                ecb.AddComponent(gameStartRpc, new PlayersRemainingToStart { Value = playersRemainingToStart });
+            }
+
+            ecb.AddComponent<SendRpcCommandRequest>(gameStartRpc);
         }
 
         ecb.Playback(state.EntityManager);
+        SystemAPI.SetSingleton(teamPlayerCounter);
     }
 }

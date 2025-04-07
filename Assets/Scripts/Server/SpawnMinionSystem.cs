@@ -11,6 +11,7 @@ public partial struct SpawnMinionSystem : ISystem
     {
         state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
         state.RequireForUpdate<MinionPathContainers>();
+        state.RequireForUpdate<GamePlayingTag>();
     }
 
     [BurstCompile]

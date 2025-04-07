@@ -36,7 +36,7 @@ namespace TMG.NFE_Tutorial
             _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
             _networkConnectionQuery = _entityManager.CreateEntityQuery(typeof(NetworkStreamConnection));
 
-			/*
+
             var startGameSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ClientStartGameSystem>();
             if (startGameSystem != null)
             {
@@ -51,7 +51,7 @@ namespace TMG.NFE_Tutorial
                 countdownSystem.OnUpdateCountdownText += UpdateCountdownText;
                 countdownSystem.OnCountdownEnd += EndCountdown;
             }
-			*/
+
         }
         
         private void OnDisable()
@@ -60,7 +60,7 @@ namespace TMG.NFE_Tutorial
             _confirmQuitButton.onClick.RemoveAllListeners();
             _cancelQuitButton.onClick.RemoveAllListeners();
 
-			/*
+			
             if (World.DefaultGameObjectInjectionWorld == null) return;
             var startGameSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<ClientStartGameSystem>();
             if (startGameSystem != null)
@@ -76,13 +76,14 @@ namespace TMG.NFE_Tutorial
                 countdownSystem.OnUpdateCountdownText -= UpdateCountdownText;
                 countdownSystem.OnCountdownEnd -= EndCountdown;
             }
-			*/
+			
         }
         
         private void UpdatePlayerRemainingText(int playersRemainingToStart)
         {
+            Debug.Log(playersRemainingToStart.ToString());
             var playersText = playersRemainingToStart == 1 ? "player" : "players";
-            _waitingText.text = $"Waiting for {playersRemainingToStart.ToString()} more {playersText} to join...";
+            _waitingText.text = $"Waiting for {playersRemainingToStart} more {playersText} to join...";
         }
 
         private void UpdateCountdownText(int countdownTime)
